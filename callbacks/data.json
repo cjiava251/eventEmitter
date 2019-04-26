@@ -1,0 +1,132 @@
+{
+    "educationCourse": {
+        "nameOfCourse": "Universe",
+        "topics": [
+            {
+                "topicName": "Solar System",
+                "questions": [
+                    {
+                        "textOfQuestion": "Quantity of planets",
+                        "answers": {
+                            "answer1": "6",
+                            "answer2": "7",
+                            "answer3": "8",
+                            "answer4": "9"
+                        },
+                        "correctAnswer": 3
+                    },
+                    {
+                        "textOfQuestion": "Our natural satellite",
+                        "answers": {
+                            "answer1": "moon",
+                            "answer2": "titan",
+                            "answer3": "phoenix",
+                            "answer4": "num"
+                        },
+                        "correctAnswer": 1
+                    },
+                    {
+                        "textOfQuestion": "Biggest planet in system",
+                        "answers": {
+                            "answer1": "earth",
+                            "answer2": "jupiter",
+                            "answer3": "saturn",
+                            "answer4": "neptun"
+                        },
+                        "correctAnswer": 2
+                    }
+                ]
+            },
+            {
+                "topicName": "Galaxies",
+                "questions": [
+                    {
+                        "textOfQuestion": "Name of our galaxy",
+                        "answers": {
+                            "answer1": "milky way",
+                            "answer2": "coffe break",
+                            "answer3": "time to tea",
+                            "answer4": "claster phoenix"
+                        },
+                        "correctAnswer": 1
+                    },
+                    {
+                        "textOfQuestion": "Nearest galaxy",
+                        "answers": {
+                            "answer1": "artemida",
+                            "answer2": "claster phoenix",
+                            "answer3": "andromeda",
+                            "answer4": "stolpy sozidaniya"
+                        },
+                        "correctAnswer": 3
+                    },
+                    {
+                        "textOfQuestion": "What in center of galaxy",
+                        "answers": {
+                            "answer1": "orange soda",
+                            "answer2": "red line",
+                            "answer3": "lost bkb",
+                            "answer4": "black hole"
+                        },
+                        "correctAnswer": 4
+                    },
+                    {
+                        "textOfQuestion": "Form of many galaxies",
+                        "answers": {
+                            "answer1": "pyramid",
+                            "answer2": "spiral",
+                            "answer3": "cube",
+                            "answer4": "ball"
+                        },
+                        "correctAnswer": 2
+                    }
+                ]
+            },
+            {
+                "topicName": "Planet Earth",
+                "questions": [
+                    {
+                        "textOfQuestion": "How many seas on planet",
+                        "answers": {
+                            "answer1": "30",
+                            "answer2": "40",
+                            "answer3": "50",
+                            "answer4": "bigger"
+                        },
+                        "correctAnswer": 4
+                    },
+                    {
+                        "textOfQuestion": "How many mainlands",
+                        "answers": {
+                            "answer1": "6",
+                            "answer2": "7",
+                            "answer3": "8",
+                            "answer4": "9"
+                        },
+                        "correctAnswer": 1
+                    },
+                    {
+                        "textOfQuestion": "Biggest mainland",
+                        "answers": {
+                            "answer1": "north America",
+                            "answer2": "Eurasia",
+                            "answer3": "Australia",
+                            "answer4": "south America"
+                        },
+                        "correctAnswer": 2
+                    },
+                    {
+                        "textOfQuestion": "Where is Heops pyramid?",
+                        "answers": {
+                            "answer1": "on Earth",
+                            "answer2": "in air",
+                            "answer3": "in Giza",
+                            "answer4": "under water"
+                        },
+                        "correctAnswer": 3
+                    }
+                ]
+            }
+        ]
+    }
+}

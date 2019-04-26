@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+  <title>Учебный курс по вселенной</title>
+  <meta charset="UTF-8">
+  <script type="text/javascript" src="mustache.js"></script>
+  <script src="/users/lodoss/stagirovka/JSAsync/jquery-3.3.1.min.js"></script>
+    
+</head>
+<body>
+  <h1 align="center">Курс: {{educationCourse.nameOfCourse}}</h1>
+  <h2 align="center">{{#educationCourse}}</h2>
+    <h3 align="center">Тема: {{#topics}}{{topicName}}<p></p><br>
+    {{#questions}}<p></p>
+    {{textOfQuestion}}<p></p>
+    {{#answers}}
+    1) {{answer1}}<p></p>
+    2) {{answer2}}<p></p>
+    3) {{answer3}}<p></p>
+    4) {{answer4}}<p></p><br>
+    {{/answers}}
+    {{/questions}}<p></p>
+    {{/topics}}
+    {{/educationCourse}}</h3>
+    
+</body>
+</html>
