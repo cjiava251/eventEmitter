@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+<head>
+  <title>Учебный курс по вселенной</title>
+  <meta charset="UTF-8">
+  <script type="text/javascript" src="mustache.js"></script>
+</head>
+<body>
+  <h1>Курс: {{#educationCourse}}
+      {{nameOfCourse}}</h1>
+      {{#topics}}
+        <h2>Тема: {{topicName}} </h2>
+        {{#questions}}
+          <h3>{{textOfQuestion}}</h3>
+          <ol>
+          {{#answers}}
+            <li>{{.}}</li>
+          {{/answers}}  
+          </ol>
+        {{/questions}}
+      {{/topics}}
+    {{/educationCourse}}
+</body>
+</html>
