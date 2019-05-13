@@ -1,15 +1,18 @@
 const fs=require('fs');
-function tail(file,char) {
-    var readableStream=fs.createReadStream(file,{encoding: 'utf-8',start: char});
-    var writebleStream=fs.createWriteStream('data2.js');
-    readableStream.pipe(writebleStream);
-    var str;
+function tail(readableFile,stringCount,writableFile) {
+    let readableStream=fs.createReadStream(readableFile,{encoding: 'utf-8',start: 0});
+    let writableStream=fs.createWriteStream(writableFile);
+    var data,stringOfData,splicedData;
     readableStream.on('data',(chunk) => {
-        str=chunk;
-        //написать код для извлечения Х последних строк
+        data=chunk.split('\n');
+        if (data.length>=stringCount)
+        {
+            splicedData=data.splice(data.length-stringCount,stringCount);
+            stringOfData=splicedData.join('\n');
+            writableStream.write(stringOfData);
+            readableStream.pipe(writableStream);
+        }
+        else throw new Error('Too many strings');
     });
-    
 }
-
-
-tail('data.js',0);
+tail('data.js',9,'data.txt');
