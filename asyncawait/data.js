@@ -1,58 +1,31 @@
 const fs = require('fs');
 const libMustache = require('mustache');
-
-let dataJson; let template; let view; let promiseJson; let promiseHtml; let promiseWrite;
-async function awaitJSON(err) {
+let template, view;
+async function readFile(jsonFile,htmlFile,buildFile) {
   try {
-    dataJson = await promiseJson;
-    view = JSON.parse(dataJson);
+    var promise = new Promise((resolve, reject) => {
+      fs.readFile(jsonFile, 'utf-8', (error, data) => {
+        if (!error) {
+          view = JSON.parse(data);
+          fs.readFile(htmlFile, 'utf-8', (error, data) => {
+            if (!error) {
+              template = data;
+              fs.writeFile(buildFile, libMustache.render(template, view), (error) => {
+                if (!error) resolve('Success');
+                else reject(error);
+              });
+            }
+            else reject(error);
+          });
+        }
+        else reject(error);
+      });
+    });
   }
-  catch {
-    console.log(err);
+  catch (error) {
+    reject(error);
   }
-}
-async function awaitHTML(err) {
-  try {
-    template = await promiseHtml;
-  }
-  catch {
-    console.log(err);
-  }
-}
-async function writeHTML() {
-  let result = await promiseWrite;
+  let result=await promise;
   console.log(result);
 }
-fs.readFile('data.json', 'utf-8', (err, data) => {
-  promiseJson = new Promise((resolve, reject) => {
-    if (err) reject(err);
-    else resolve(data);
-  });
-  awaitJSON(err);
-
-});
-
-fs.readFile('template.html', 'utf-8', (err, data) => {
-  promiseHtml = new Promise((resolve, reject) => {
-    if (err) reject(err);
-    else resolve(data);
-  });
-  awaitHTML(err);
-});
-
-function waitForReadFile() {
-  setTimeout(() => {
-    if ((!view) || (!template)) waitForReadFile();
-    else {
-      const output = libMustache.render(template, view);
-      fs.writeFile('build.html', output, (err) => {
-        promiseWrite = new Promise((resolve, reject) => {
-          if (err) reject(err);
-          else resolve('Success!');
-        });
-        writeHTML();
-      });
-    }
-  }, 100);
-}
-waitForReadFile();
+readFile('data.json','template.html','building.html');

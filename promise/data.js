@@ -1,44 +1,33 @@
 const fs = require('fs');
 const libMustache = require('mustache');
-
-let dataJson; let template; let view; let promiseJson; let promiseHtml; let promiseWrite;
-fs.readFile('data.json', 'utf-8', (err, data) => {
-  promiseJson = new Promise((resolve, reject) => {
-    if (err) reject(err);
-    else resolve(data);
-  });
-  promiseJson.then(
-    (addText) => { dataJson = addText; view = JSON.parse(dataJson); },
-    error => console.log(error),
-  );
-});
-fs.readFile('template.html', 'utf-8', (err, data) => {
-  promiseHtml = new Promise((resolve, reject) => {
-    if (err) reject(err);
-    else resolve(data);
-  });
-  promiseHtml.then(
-    addText => template = addText,
-    error => console.log(error),
-  );
-});
-
-function waitForReadFile() {
-  setTimeout(() => {
-    if ((!view) || (!template)) waitForReadFile();
-    else {
-      const output = libMustache.render(template, view);
-      fs.writeFile('build.html', output, (err) => {
-        promiseWrite = new Promise((resolve, reject) => {
-          if (err) reject(err);
-          else resolve('Success!');
-        });
-        promiseWrite.then(
-          success => console.log(success),
-          error => console.log(error),
-        );
+let template, view;
+function readFile(jsonFile, htmlFile, buildFile) {
+  try {
+    return new Promise((resolve, reject) => {
+      fs.readFile(jsonFile, 'utf-8', (error, data) => {
+        if (!error) {
+          view = JSON.parse(data);
+          fs.readFile(htmlFile, 'utf-8', (error, data) => {
+            if (!error) {
+              template = data;
+              fs.writeFile(buildFile, libMustache.render(template, view), (error) => {
+                if (!error) resolve('Success');
+                else reject(error);
+              });
+            }
+            else reject(error);
+          });
+        }
+        else reject(error);
       });
-    }
-  }, 100);
+    });
+  }
+  catch (error) {
+    reject(error);
+  }
 }
-waitForReadFile();
+readFile('data.json', 'template.html', 'build.html')
+  .then(
+    result => console.log(result),
+    error => console.log(error)
+  );
