@@ -11,24 +11,30 @@ function readFile(file) {
   });
 }
 
-readFile('data.json')
-  .then(
-    jsonData => {
-      view = JSON.parse(jsonData);
-      return 'template.html';
-    })
-  .then(
-    htmlFile => {
-      return readFile(htmlFile);
-    })
-  .then(
-    htmlData => {
-      template = htmlData;
-      fs.writeFile('builder.html', libMustache.render(template, view), (error) => {
-        if (error) throw error;
-        else console.log('success');
-      });
-    })
-  .catch(
-    error => console.log(error)
-  );
+function writeFile(file) {
+  fs.writeFile(file, libMustache.render(template, view), (error) => {
+    if (error) throw error;
+    else console.log('success');
+  });
+}
+
+function buildFile(jsonFile, htmlFile, buildFile) {
+  readFile(jsonFile)
+    .then(
+      jsonData => {
+        view = JSON.parse(jsonData);
+        return readFile(htmlFile);
+      })
+    .then(
+      htmlData => {
+        template = htmlData;
+        writeFile(buildFile);
+      })
+    .catch(
+      error => console.log(error)
+    );
+}
+
+buildFile('data.json', 'template.html', 'build.html');
+
+

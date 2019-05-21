@@ -1,6 +1,6 @@
 const fs = require('fs');
 const libMustache = require('mustache');
-let template, view;
+
 
 function readFile(file) {
   return new Promise((resolve, reject) => {
@@ -11,13 +11,18 @@ function readFile(file) {
   });
 }
 
-async function writeFile(jsonFile, htmlFile, buildFile) {
-  view = JSON.parse(await readFile(jsonFile));
-  template = await readFile(htmlFile);
-  fs.writeFile(buildFile, libMustache.render(template, view), (error) => {
+function writeFile(file, template, view) {
+  fs.writeFile(file, libMustache.render(template, view), (error) => {
     if (error) throw error;
-    else console.log('success');
+    else console.log('Success');
   });
 }
-writeFile('data,json', 'template.html', 'build.html');
+
+async function buildFile(jsonFile, htmlFile, buildFile) {
+  const view = JSON.parse(await readFile(jsonFile));
+  const template = await readFile(htmlFile);
+  writeFile(buildFile, template, view);
+}
+
+buildFile('data.json', 'template.html', 'build.html');
 
