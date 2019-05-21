@@ -1,9 +1,4 @@
 const fs = require('fs');
-/*
-let writableStream=fs.createWriteStream('bigfile.txt');
-for (let i=0;i<=100;i++)
-    writableStream.write('qwertyuiopfghjgderhhgdfghdfty767567856fdbhfghdfghf3224dsfhbddfhjgdr\n');
-    */
 
 function tail(readableFile, writableFile, stringCount) {
   const readableStream = fs.createReadStream(readableFile, { encoding: 'utf-8', start: 0 });
@@ -22,7 +17,7 @@ function tail(readableFile, writableFile, stringCount) {
     const stringOfData = splicedData.join('\n');
     tailStream.write(stringOfData);
     tailStream.end();
-    console.log(stringOfData);
+    process.stdout.write(stringOfData)
   });
 }
 

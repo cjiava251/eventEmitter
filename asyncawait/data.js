@@ -1,31 +1,23 @@
 const fs = require('fs');
 const libMustache = require('mustache');
 let template, view;
-async function readFile(jsonFile,htmlFile,buildFile) {
-  try {
-    var promise = new Promise((resolve, reject) => {
-      fs.readFile(jsonFile, 'utf-8', (error, data) => {
-        if (!error) {
-          view = JSON.parse(data);
-          fs.readFile(htmlFile, 'utf-8', (error, data) => {
-            if (!error) {
-              template = data;
-              fs.writeFile(buildFile, libMustache.render(template, view), (error) => {
-                if (!error) resolve('Success');
-                else reject(error);
-              });
-            }
-            else reject(error);
-          });
-        }
-        else reject(error);
-      });
+
+function readFile(file) {
+  return new Promise((resolve,reject) => {
+    fs.readFile(file,'utf-8',(error,data) => {
+      if (error) reject(error);
+      else resolve(data);
     });
-  }
-  catch (error) {
-    reject(error);
-  }
-  let result=await promise;
-  console.log(result);
+  });
 }
-readFile('data.json','template.html','building.html');
+
+async function writeFile(jsonFile,htmlFile,buildFile) {
+  view=JSON.parse(await readFile(jsonFile));
+  template=await readFile(htmlFile);
+  fs.writeFile(buildFile,libMustache.render(template,view), (error) => {
+    if (error) throw error;
+    else console.log('success');
+  });
+}
+writeFile('data,json','template.html','build.html');
+
