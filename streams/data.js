@@ -1,24 +1,34 @@
 const fs = require('fs');
 
-function tail(readableFile, writableFile, stringCount) {
+function tail(readableFile, writableFile, stringCount = 10) {
   const readableStream = fs.createReadStream(readableFile, { encoding: 'utf-8', start: 0 });
   const writableStream = fs.createWriteStream(writableFile);
-  const tailStream = fs.createWriteStream('laststrings.txt');
   readableStream.pipe(writableStream);
-  if (stringCount === undefined)
-    stringCount = 10;
-  let data = '';
-  readableStream.on('data', (chunk) => {
-    data += chunk;
-  });
-  writableStream.on('finish', () => {
-    const dataArray = data.split('\n');
-    const splicedData = dataArray.splice(dataArray.length - stringCount, stringCount);
-    const stringOfData = splicedData.join('\n');
-    tailStream.write(stringOfData);
-    tailStream.end();
-    process.stdout.write(stringOfData)
-  });
+
+  readData()
+    .then(
+      data => {
+        process.stdout.write(data);
+      },
+    )
+    .catch(
+      error => console.log(error)
+    )
+
+  function readData() {
+    return new Promise((resolve) => {
+      let data = "";
+      readableStream.on('data', (chunk) => {
+        data += chunk;
+      });
+      readableStream.on('end', () => {
+        const dataArray = data.split('\n');
+        const splicedData = dataArray.splice(dataArray.length - stringCount, stringCount);
+        const stringOfData = splicedData.join('\n');
+        resolve(stringOfData);
+      });
+    });
+  }
 }
 
 tail('datas.txt', 'data.txt');
